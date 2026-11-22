@@ -1,0 +1,7 @@
+library: vshtask
+version: 1
+module: vshmain
+exports:
+  - name: vshtask_A02D46E7
+    nid: '0xA02D46E7'
+    signature: 'int32_t vshtask_A02D46E7(int32_t arg, const char *msg)'
