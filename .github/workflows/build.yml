@@ -1,0 +1,22 @@
+name: Build PS3 experiments
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Test probe state transitions
+        run: |
+          cc -std=c99 -Wall -Wextra -Werror experiments/panel-probe/test.c -o "$RUNNER_TEMP/panel-test"
+          "$RUNNER_TEMP/panel-test"
+      - uses: BenjiThatFoxGuy/setup-ps3dk@v0.1.0
+      - name: Build and verify the probe
+        run: bash experiments/panel-probe/build.sh
+      - uses: actions/upload-artifact@v6
+        with:
+          name: panel-probe
+          path: dist/
+          if-no-files-found: error
+          retention-days: 14
