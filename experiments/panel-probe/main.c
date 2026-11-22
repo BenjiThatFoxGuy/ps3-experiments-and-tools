@@ -137,7 +137,7 @@ int module_stop(size_t args, void *argp)
     if (!started)
         return 0;
     __atomic_store_n(&stop_requested, 1, __ATOMIC_RELEASE);
-    { lv2syscall2(44, worker_id, (u64)(uintptr_t)&exit_status); }
+    lv2syscall2(44, worker_id, (u64)(uintptr_t)&exit_status);
     int result = (int)p1;
     if (!result)
         started = 0;
